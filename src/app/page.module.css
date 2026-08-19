@@ -1,0 +1,39 @@
+.page {
+  position: relative;
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* subtle film grain */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: radial-gradient(
+      circle at 25% 30%,
+      #fff 0.5px,
+      transparent 0.6px
+    ),
+    radial-gradient(circle at 70% 65%, #fff 0.5px, transparent 0.6px);
+  background-size:
+    3px 3px,
+    4px 4px;
+}
+
+/* edge vignette */
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 80% at 50% 0%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}

@@ -1,0 +1,139 @@
+.section {
+  position: relative;
+  z-index: 2;
+  padding: clamp(80px, 12vh, 160px) var(--pad-x);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--bg-panel);
+  scroll-margin-top: 60px;
+}
+
+.inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.head {
+  text-align: center;
+  margin-bottom: 52px;
+}
+
+.h2 {
+  font-size: clamp(32px, 4.6vw, 66px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: clamp(24px, 3vw, 56px);
+  align-items: center;
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stage {
+  position: relative;
+  height: min(72vh, 620px);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: radial-gradient(
+    60% 60% at 50% 45%,
+    color-mix(in oklch, var(--accent) 14%, transparent),
+    var(--bg-panel) 74%
+  );
+}
+
+.gridLines {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.03) 0 1px,
+      transparent 1px 44px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.03) 0 1px,
+      transparent 1px 44px
+    );
+}
+
+.stageLabel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  white-space: pre-line;
+}
+
+.stageLabel span {
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: rgba(242, 243, 245, 0.4);
+  text-transform: uppercase;
+  line-height: 1.8;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 26px;
+}
+
+.tab {
+  cursor: pointer;
+  padding: 9px 15px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  color: rgba(242, 243, 245, 0.6);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.tabActive {
+  color: var(--bg);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.layTitle {
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px;
+}
+
+.layDesc {
+  font-size: clamp(15px, 1.3vw, 18px);
+  color: rgba(242, 243, 245, 0.62);
+  line-height: 1.6;
+  margin: 0 0 28px;
+  min-height: 4em;
+}
+
+.specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(242, 243, 245, 0.55);
+}
+
+.specs span {
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
