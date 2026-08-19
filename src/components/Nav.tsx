@@ -1,19 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { navLinks } from "@/lib/content";
 import styles from "./Nav.module.css";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const close = () => setOpen(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
-      <nav className={styles.nav}>
+      <nav
+        className={`${styles.nav} ${scrolled ? styles.navScrolled : ""}`}
+      >
         <a href="#top" className={styles.brand}>
           <span className={styles.mark} />
-          <span className={styles.wordmark}>AURA</span>
+          <span className={styles.wordmark}>AURAMI</span>
         </a>
         <div className={`${styles.links} desktopOnly`}>
           {navLinks.map((l) => (

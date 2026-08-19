@@ -15,7 +15,7 @@ export default function Footer() {
         <div>
           <div className={styles.brand}>
             <span className={styles.mark} />
-            <span className={styles.wordmark}>AURA</span>
+            <span className={styles.wordmark}>AURAMI</span>
           </div>
           <p className={styles.tagline}>
             Building intelligent machines for a more human future.
@@ -38,7 +38,7 @@ export default function Footer() {
         </div>
       </div>
       <div className={styles.bottom}>
-        <span>© 2026 AURA Robotics. All rights reserved.</span>
+        <span>© 2026 AURAMI Robotics. All rights reserved.</span>
         <div className={styles.bottomLinks}>
           <a href="#">Privacy</a>
           <a href="#">Terms</a>

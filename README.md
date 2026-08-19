@@ -1,6 +1,6 @@
-# AURA — Landing Page
+# AURAMI — Landing Page
 
-A cinematic, dark landing page for **AURA Robotics** and its humanoid robot **Aria**, built with the latest Next.js (App Router) and TypeScript. Ported from the original design component in `aura.zip` (see `docs/design-reference.png`).
+A cinematic, dark landing page for **AURAMI Robotics** and its humanoid robot **Aria**, built with the latest Next.js (App Router) and TypeScript. Ported from the original design component in `aura.zip` (see `docs/design-reference.png`).
 
 ## Stack
 

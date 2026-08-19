@@ -20,14 +20,14 @@ const manrope = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "AURA — Meet the Machine That Lives With You",
+  title: "AURAMI — Meet the Machine That Lives With You",
   description:
-    "Humanoid intelligence designed to move through the world with you. AURA Robotics is building intelligent machines for a more human future.",
+    "Humanoid intelligence designed to move through the world with you. AURAMI Robotics is building intelligent machines for a more human future.",
   openGraph: {
-    title: "AURA — Meet the Machine That Lives With You",
+    title: "AURAMI — Meet the Machine That Lives With You",
     description:
       "Humanoid intelligence designed to move through the world with you.",
-    siteName: "AURA Robotics",
+    siteName: "AURAMI Robotics",
     type: "website",
   },
 };
