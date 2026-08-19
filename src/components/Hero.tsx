@@ -1,3 +1,4 @@
+import Hero3D from "./Hero3D";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
@@ -45,12 +46,9 @@ export default function Hero() {
         <div className={styles.stageGlow} />
         <div className="stripes" />
         <div className={styles.sweep} data-anim />
-        <div className={styles.stageLabel}>
-          <span className="placeholderLabel">
-            [ hero render / video ]
-            <br />
-            Aria emerging from darkness · rim light · slow head turn
-          </span>
+        <Hero3D />
+        <div className={styles.stageCaption}>
+          ARIA · V1 <span className={styles.stageCaptionDot} /> IDLE
         </div>
       </div>
 

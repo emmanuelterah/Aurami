@@ -158,14 +158,47 @@
   animation: lightSweep 7s ease-in-out infinite;
 }
 
-.stageLabel {
+.canvasWrap {
   position: absolute;
   inset: 0;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+
+.canvasWrapReady {
+  opacity: 1;
+}
+
+.canvasWrap canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.stageCaption {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 26px;
-  text-align: center;
+  align-items: center;
+  gap: 8px;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  color: rgba(242, 243, 245, 0.45);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.stageCaptionDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
 }
 
 .scrollHint {
