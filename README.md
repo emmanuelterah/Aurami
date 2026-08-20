@@ -95,3 +95,22 @@ Rules of thumb when fixing things: text/copy changes almost always happen in
 `src/lib/content.ts`; colors and spacing tokens in `src/app/globals.css`;
 anything 3D in `src/components/three/`; a specific page section in its file
 under `src/components/sections/`.
+
+## Performance
+
+3D models lazy-load: each section's GLB is fetched only when the section
+scrolls near the viewport, each file is downloaded/parsed at most once per
+page (shared loader in `src/components/three/loadModel.ts`), and rendering
+pauses while a canvas is off-screen.
+
+Before deploying, compress the models (one-time setup, then one command):
+
+```
+yarn optimize:models
+```
+
+This rewrites every GLB in `public/models` in place with meshopt compression
+and WebP textures (typically 90%+ smaller). Commit the repo first. The
+runtime loader already has the meshopt decoder wired in, so the compressed
+files work with no code changes.
+

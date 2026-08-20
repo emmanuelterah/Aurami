@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { loadModel } from "./loadModel";
+import { useNearViewport } from "./useNearViewport";
 import { applyBrandAccent } from "./warmModel";
 import styles from "./EngineeringViewer.module.css";
 
@@ -19,6 +20,7 @@ const TURN_SPEED = 0.0022;
  */
 export default function EngineeringViewer({ mode }: { mode: string }) {
   const mountRef = useRef<HTMLDivElement>(null);
+  const near = useNearViewport(mountRef);
   const [ready, setReady] = useState(false);
   const apiRef = useRef<((m: string) => void) | null>(null);
   const modeRef = useRef(mode);
@@ -30,7 +32,7 @@ export default function EngineeringViewer({ mode }: { mode: string }) {
 
   useEffect(() => {
     const mount = mountRef.current;
-    if (!mount) return;
+    if (!mount || !near) return;
     let disposed = false;
     let raf = 0;
     let visible = true;
@@ -140,8 +142,7 @@ export default function EngineeringViewer({ mode }: { mode: string }) {
       const url = LAYER_MODEL_URLS[m];
       if (!url || layerModels.has(m)) return;
       layerModels.set(m, "loading");
-      new GLTFLoader().load(
-        url,
+      loadModel(url).then(
         (gltf) => {
           if (disposed) return;
           const model = gltf.scene;
@@ -154,7 +155,6 @@ export default function EngineeringViewer({ mode }: { mode: string }) {
           layerModels.set(m, holder);
           if (modeRef.current === m) applyMode(m);
         },
-        undefined,
         () => {
           if (!disposed) layerModels.set(m, "failed");
         },
@@ -217,7 +217,7 @@ export default function EngineeringViewer({ mode }: { mode: string }) {
     };
     apiRef.current = applyMode;
 
-    new GLTFLoader().load("/models/hero.glb", (gltf) => {
+    loadModel("/models/hero.glb").then((gltf) => {
       if (disposed) return;
       const model = gltf.scene;
 
@@ -246,6 +246,12 @@ export default function EngineeringViewer({ mode }: { mode: string }) {
       group.add(model);
       applyMode(modeRef.current);
       setReady(true);
+
+      // prefetch the layer models (now ~4MB each) so the Skeleton and
+      // Actuators tabs swap in real geometry instantly, with no
+      // wireframe stand-in flash
+      ensureLayerModel("skeleton");
+      ensureLayerModel("actuators");
     });
 
     const clock = new THREE.Clock();
@@ -311,7 +317,7 @@ export default function EngineeringViewer({ mode }: { mode: string }) {
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, []);
+  }, [near]);
 
   return (
     <div

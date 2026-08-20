@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { loadModel } from "./loadModel";
+import { useNearViewport } from "./useNearViewport";
 import { applyBrandAccent } from "./warmModel";
 import styles from "./RobotWalk.module.css";
 
@@ -25,12 +26,13 @@ export default function RobotWalk({
   children,
 }: Props) {
   const mountRef = useRef<HTMLDivElement>(null);
+  const near = useNearViewport(mountRef);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     const mount = mountRef.current;
-    if (!mount) return;
+    if (!mount || !near) return;
 
     let disposed = false;
     let raf = 0;
@@ -103,8 +105,9 @@ export default function RobotWalk({
     let heading = Math.PI / 2; // facing +x (direction of travel)
     let targetHeading = heading;
 
-    new GLTFLoader().load(
+    loadModel(
       mode === "aware" ? "/models/reaching.glb" : "/models/walk.glb",
+    ).then(
       (gltf) => {
         if (disposed) return;
         const model = gltf.scene;
@@ -138,7 +141,6 @@ export default function RobotWalk({
         }
         setReady(true);
       },
-      undefined,
       () => {
         if (!disposed) setFailed(true);
       },
@@ -229,7 +231,7 @@ export default function RobotWalk({
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, [variant, mode]);
+  }, [variant, mode, near]);
 
   const wrapClass = [
     styles.wrap,

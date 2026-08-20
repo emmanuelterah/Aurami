@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ShowcaseViewer from "@/components/three/ShowcaseViewer";
 import { capabilities } from "@/lib/content";
 import styles from "./Showcase.module.css";
 
@@ -20,13 +21,11 @@ export default function Showcase() {
       <div className={styles.grid}>
         <div className={styles.stage}>
           <div className="stripes" />
-          <div className={styles.stageLabel}>
+          <ShowcaseViewer focus={active}>
             <span className="placeholderLabel">
-              [ full-body render ]
-              <br />
               Aria · front view · click a point
             </span>
-          </div>
+          </ShowcaseViewer>
           {capabilities.map((c) => (
             <button
               key={c.id}

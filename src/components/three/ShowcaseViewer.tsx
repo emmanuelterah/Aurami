@@ -5,21 +5,44 @@ import * as THREE from "three";
 import { loadModel } from "./loadModel";
 import { useNearViewport } from "./useNearViewport";
 import { applyBrandAccent } from "./warmModel";
-import styles from "./Hero3D.module.css";
+import styles from "./ShowcaseViewer.module.css";
 
-const TURN_SPEED = 0.0022; // slow idle turn, ~48s per revolution
-const ACCENT = 0xf7d081; // ≈ var(--accent)
-const ACCENT_2 = 0xe5764f; // ≈ var(--accent-2)
+const GOLD = 0xf7d081;
+const AMBER = 0xe5764f;
 
-export default function Hero3D() {
+/** 3D anchor per capability on the normalized (h=2.35, centered) body. */
+const ANCHORS: Record<string, [number, number, number]> = {
+  vision: [0, 1.0, 0.2],
+  intelligence: [0.18, 0.82, 0.16],
+  hands: [-0.45, -0.12, 0.14],
+  learning: [0, 0.38, 0.2],
+  movement: [0, -0.85, 0.14],
+};
+
+type Props = {
+  focus: string;
+  children?: React.ReactNode; // fallback until the model loads
+};
+
+/**
+ * Showcase stage: Aria front-on and steady (the DOM hotspots are pinned at
+ * fixed positions), breathing gently, while a warm focus light glides to
+ * whichever capability is selected.
+ */
+export default function ShowcaseViewer({ focus, children }: Props) {
   const mountRef = useRef<HTMLDivElement>(null);
   const near = useNearViewport(mountRef);
   const [ready, setReady] = useState(false);
+  const targetRef = useRef(new THREE.Vector3(0, 1.0, 0.2));
+
+  useEffect(() => {
+    const a = ANCHORS[focus];
+    if (a) targetRef.current.set(a[0], a[1], a[2]);
+  }, [focus]);
 
   useEffect(() => {
     const mount = mountRef.current;
     if (!mount || !near) return;
-
     let disposed = false;
     let raf = 0;
     let visible = true;
@@ -33,58 +56,43 @@ export default function Hero3D() {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
-      34,
+      32,
       mount.clientWidth / mount.clientHeight,
       0.1,
       100,
     );
-    camera.position.set(0, 0.15, 4.4);
+    camera.position.set(0, 0.1, 4.8);
+    camera.lookAt(0, 0, 0);
 
-    // "emerging from darkness": faint ambient, dim key, strong cool rims
-    scene.add(new THREE.HemisphereLight(0x3a332a, 0x080604, 0.65));
-
-    const key = new THREE.DirectionalLight(0xfff1dd, 0.8);
+    scene.add(new THREE.HemisphereLight(0x3a332a, 0x080604, 0.6));
+    const key = new THREE.DirectionalLight(0xfff1dd, 0.65);
     key.position.set(1.2, 2.2, 3);
     scene.add(key);
-
-    const rimL = new THREE.DirectionalLight(ACCENT, 3.0);
-    rimL.position.set(-3, 1.6, -2.4);
+    const rimL = new THREE.DirectionalLight(GOLD, 2.2);
+    rimL.position.set(-3, 1.7, -2.4);
     scene.add(rimL);
-
-    const rimR = new THREE.DirectionalLight(ACCENT_2, 2.4);
-    rimR.position.set(3, 0.8, -2.2);
+    const rimR = new THREE.DirectionalLight(AMBER, 1.7);
+    rimR.position.set(3, 0.9, -2.2);
     scene.add(rimR);
 
-    const under = new THREE.PointLight(ACCENT, 0.9, 8);
-    under.position.set(0, -1.6, 1.2);
-    scene.add(under);
+    // the guided-tour light: glides to the selected capability
+    const focusLight = new THREE.PointLight(GOLD, 2.4, 2.2, 1.6);
+    focusLight.position.copy(targetRef.current);
+    scene.add(focusLight);
 
     const group = new THREE.Group();
     scene.add(group);
 
-    // pointer parallax
-    const target = { x: 0, y: 0 };
-    const onPointer = (e: PointerEvent) => {
-      const r = mount.getBoundingClientRect();
-      target.x = ((e.clientX - r.left) / r.width - 0.5) * 2;
-      target.y = ((e.clientY - r.top) / r.height - 0.5) * 2;
-    };
-    mount.addEventListener("pointermove", onPointer);
-
     loadModel("/models/hero.glb").then((gltf) => {
       if (disposed) return;
       const model = gltf.scene;
-
-      // normalize: center at origin, scale to a known height
       const box = new THREE.Box3().setFromObject(model);
       const size = box.getSize(new THREE.Vector3());
       const center = box.getCenter(new THREE.Vector3());
       const scale = 2.35 / size.y;
       model.scale.setScalar(scale);
       model.position.sub(center.multiplyScalar(scale));
-      model.position.y -= 0.08;
       applyBrandAccent(model);
-
       group.add(model);
       setReady(true);
     });
@@ -95,11 +103,12 @@ export default function Hero3D() {
       if (!visible) return;
       const t = clock.getElapsedTime();
 
-      group.rotation.y += TURN_SPEED;
-      group.rotation.x += (target.y * 0.06 - group.rotation.x) * 0.04;
-      group.position.y = Math.sin(t * 0.6) * 0.03;
-      camera.position.x += (target.x * 0.18 - camera.position.x) * 0.04;
-      camera.lookAt(0, 0, 0);
+      // steady front pose: breathing only, so the hotspots stay anchored
+      group.position.y = Math.sin(t * 0.9) * 0.012;
+      group.rotation.y = Math.sin(t * 0.25) * 0.03;
+
+      focusLight.position.lerp(targetRef.current, 0.06);
+      focusLight.intensity = 2.4 + Math.sin(t * 3) * 0.35;
 
       renderer.render(scene, camera);
     };
@@ -108,6 +117,7 @@ export default function Hero3D() {
     const ro = new ResizeObserver(() => {
       const w = mount.clientWidth;
       const h = mount.clientHeight;
+      if (!w || !h) return;
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
@@ -124,7 +134,6 @@ export default function Hero3D() {
       cancelAnimationFrame(raf);
       ro.disconnect();
       io.disconnect();
-      mount.removeEventListener("pointermove", onPointer);
       scene.traverse((obj) => {
         if (obj instanceof THREE.Mesh) {
           obj.geometry.dispose();
@@ -147,9 +156,13 @@ export default function Hero3D() {
   return (
     <div
       ref={mountRef}
-      className={`${styles.canvasWrap} ${ready ? styles.canvasWrapReady : ""}`}
-      aria-label="Aria humanoid robot, 3D model"
+      className={`${styles.wrap} ${ready ? styles.wrapReady : ""}`}
+      aria-label="Aria full-body view, 3D model"
       role="img"
-    />
+    >
+      {!ready && children ? (
+        <div className={styles.fallback}>{children}</div>
+      ) : null}
+    </div>
   );
 }
