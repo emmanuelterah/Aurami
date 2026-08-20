@@ -173,18 +173,37 @@ export const peopleScenes = [
   "Limited mobility + Aria",
 ];
 
-export const lifeScenes = [
+export type LifeScene = {
+  title: string;
+  caption: string;
+  wide: boolean;
+  image?: string;
+};
+
+export const lifeScenes: LifeScene[] = [
   {
     title: "In a modern home",
-    caption: "[ scene · Aria in the kitchen ]",
+    caption: "Coffee poured, meds on time — mornings that start themselves.",
     wide: true,
+    image: "/assets/assisted-living-companion.jpg",
   },
-  { title: "Carrying laundry", caption: "[ scene ]", wide: false },
-  { title: "Helping an elderly parent", caption: "[ scene ]", wide: false },
+  {
+    title: "Carrying laundry",
+    caption: "The basket makes it upstairs before you notice it was full.",
+    wide: false,
+    image: "/assets/assistant-housemanager.jfif",
+  },
+  {
+    title: "Helping an elderly parent",
+    caption: "A patient arm to lean on, for every walk down the hall.",
+    wide: false,
+    image: "/assets/assisted-living-support.jpg",
+  },
   {
     title: "Organizing a space",
-    caption: "[ scene · tidying shelves ]",
+    caption: "Every item back where it belongs, without being asked twice.",
     wide: true,
+    image: "/assets/assistant-repetitivetasks.jfif",
   },
 ];
 

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { lifeScenes } from "@/lib/content";
 import { d } from "./shared";
 import styles from "./story.module.css";
@@ -23,7 +24,20 @@ export function DesignedForLife() {
               className={`${styles.lifeCard} ${s.wide ? styles.lifeCardWide : ""} revealSoon`}
               style={d(i * 0.06)}
             >
-              <div className="stripes" />
+              {s.image ? (
+                <>
+                  <Image
+                    src={s.image}
+                    alt={s.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                    className={styles.lifeCardImage}
+                  />
+                  <div className={styles.lifeCardScrim} />
+                </>
+              ) : (
+                <div className="stripes" />
+              )}
               <div className={styles.lifeCardLabel}>
                 <div
                   className={styles.lifeCardTitle}
