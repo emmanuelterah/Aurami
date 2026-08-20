@@ -166,11 +166,22 @@ export const learnedHabits = [
   "How you like things organized.",
 ];
 
-export const peopleScenes = [
-  "Parent + Aria",
-  "Elderly + Aria",
-  "Professional + Aria",
-  "Limited mobility + Aria",
+export type PeopleScene = {
+  label: string;
+  image?: string;
+};
+
+export const peopleScenes: PeopleScene[] = [
+  { label: "Parent + Aria", image: "/assets/chapter4/parent-aria.jfif" },
+  { label: "Elderly + Aria", image: "/assets/chapter4/elderly-aria.jfif" },
+  {
+    label: "Professional + Aria",
+    image: "/assets/chapter4/professional-aria.jfif",
+  },
+  {
+    label: "Limited mobility + Aria",
+    image: "/assets/chapter4/mobility-aria.jfif",
+  },
 ];
 
 export type LifeScene = {

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { peopleScenes } from "@/lib/content";
 import { d } from "./shared";
 import styles from "./story.module.css";
@@ -16,9 +17,26 @@ export function People() {
         </div>
         <div className={styles.peopleGrid}>
           {peopleScenes.map((p, i) => (
-            <div key={p} className={`${styles.peopleCard} revealSoon`} style={d(i * 0.06)}>
-              <div className="stripes" />
-              <div className={styles.peopleCardLabel}>{p}</div>
+            <div
+              key={p.label}
+              className={`${styles.peopleCard} revealSoon`}
+              style={d(i * 0.06)}
+            >
+              {p.image ? (
+                <>
+                  <Image
+                    src={p.image}
+                    alt={p.label}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 25vw"
+                    className={styles.peopleCardImage}
+                  />
+                  <div className={styles.peopleCardScrim} />
+                </>
+              ) : (
+                <div className="stripes" />
+              )}
+              <div className={styles.peopleCardLabel}>{p.label}</div>
             </div>
           ))}
         </div>
