@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import EngineeringViewer from "@/components/three/EngineeringViewer";
 import { engineeringSpecs, layers } from "@/lib/content";
 import styles from "./Engineering.module.css";
 
@@ -22,6 +23,7 @@ export default function Engineering() {
         <div className={styles.grid}>
           <div className={styles.stage}>
             <div className={styles.gridLines} />
+            <EngineeringViewer mode={active} />
             <div className={styles.stageLabel}>
               <span>{current.cap}</span>
             </div>

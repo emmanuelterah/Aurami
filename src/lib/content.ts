@@ -56,31 +56,31 @@ export const layers: Layer[] = [
     id: "exterior",
     title: "Exterior",
     desc: "A matte composite shell with soft integrated lighting. Nothing mechanical is exposed — the design is made to live alongside people.",
-    cap: "[ full-body render ]\nOuter shell · matte composite",
+    cap: "Outer shell · matte composite",
   },
   {
     id: "skeleton",
     title: "Skeleton",
     desc: "A lightweight structural frame tuned for balance, reach, and a natural, grounded gait that communicates real mass.",
-    cap: "[ overlay reveal ]\nStructural frame · balance mapping",
+    cap: "Structural frame · balance mapping",
   },
   {
     id: "actuators",
     title: "Actuators",
     desc: "Precision actuators deliver strength with gentle, controlled force — powerful enough to help, calibrated to be safe.",
-    cap: "[ overlay reveal ]\nActuator network · torque map",
+    cap: "Actuator network · torque map",
   },
   {
     id: "sensors",
     title: "Sensors",
     desc: "Depth, vision, and touch fuse into one continuous, real-time picture of the room and the people in it.",
-    cap: "[ overlay reveal ]\nSensor fusion · depth + vision + touch",
+    cap: "Sensor fusion · depth + vision + touch",
   },
   {
     id: "intelligence",
     title: "Intelligence",
     desc: "On-device planning turns intent into safe, deliberate motion — reasoning that runs locally, privately, in real time.",
-    cap: "[ overlay reveal ]\nEdge AI · autonomous planning",
+    cap: "Edge AI · autonomous planning",
   },
 ];
 

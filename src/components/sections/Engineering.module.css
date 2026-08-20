@@ -69,11 +69,12 @@
   position: absolute;
   inset: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   text-align: center;
-  padding: 24px;
+  padding: 20px;
   white-space: pre-line;
+  pointer-events: none;
 }
 
 .stageLabel span {
