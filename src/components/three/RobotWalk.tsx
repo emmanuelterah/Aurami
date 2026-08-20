@@ -9,7 +9,10 @@ import styles from "./RobotWalk.module.css";
 
 const ACCENT = 0xf7d081;
 const ACCENT_2 = 0xe5764f;
-const WALK_SPEED = 0.5; // world units per second
+const WALK_SPEED = 0.3; // world units per second
+const WALK_CLIP_SPEED = 0.72; // slow the walk cycle to match
+const FOOT_SINK = 0.04; // settle the animated feet onto the ground plane
+const WALK_LEAN = 0.07; // forward pitch: brings the toes down off the heels
 const ROBOT_HEIGHT = 1.7;
 const AWARE_HEADING = -0.55; // turned toward the person callout, viewer-left
 
@@ -56,7 +59,7 @@ export default function RobotWalk({
       camera.position.set(0, 1.15, 5.4);
       camera.lookAt(0, 0.85, 0);
     } else {
-      camera.position.set(0, 1.0, 7.2);
+      camera.position.set(0, 0.95, 5.8);
       camera.lookAt(0, 0.8, 0);
     }
 
@@ -100,7 +103,7 @@ export default function RobotWalk({
     scene.add(group);
 
     let mixer: THREE.AnimationMixer | null = null;
-    const BOUND = variant === "scene" ? 1.8 : 2.8;
+    const BOUND = variant === "scene" ? 1.8 : 0.7;
     let dir = 1;
     let heading = Math.PI / 2; // facing +x (direction of travel)
     let targetHeading = heading;
@@ -119,7 +122,9 @@ export default function RobotWalk({
         model.scale.setScalar(scale);
         model.position.x = -center.x * scale;
         model.position.z = -center.z * scale;
-        model.position.y = -box.min.y * scale; // feet on the ground
+        model.position.y =
+          -box.min.y * scale - (mode === "walk" ? FOOT_SINK : 0); // feet on the ground
+        if (mode === "walk") model.rotation.x = WALK_LEAN;
 
         applyBrandAccent(model);
         group.add(model);
@@ -137,7 +142,9 @@ export default function RobotWalk({
           const clip =
             gltf.animations.find((c) => /walk/i.test(c.name)) ??
             gltf.animations[0];
-          mixer.clipAction(clip).play();
+          const action = mixer.clipAction(clip);
+          action.timeScale = WALK_CLIP_SPEED;
+          action.play();
         }
         setReady(true);
       },

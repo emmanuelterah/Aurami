@@ -21,7 +21,7 @@
   inset: auto;
   width: 100%;
   max-width: 1100px;
-  height: clamp(220px, 32vh, 320px);
+  height: clamp(280px, 42vh, 420px);
   margin: 52px auto 10px;
 }
 
