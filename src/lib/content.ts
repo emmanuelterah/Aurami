@@ -88,6 +88,8 @@ export type Application = {
   tag: string;
   title: string;
   desc: string;
+  /** optional card background, path under /public */
+  image?: string;
 };
 
 export const applications: Application[] = [
@@ -95,31 +97,37 @@ export const applications: Application[] = [
     tag: "HOME",
     title: "Your household assistant",
     desc: "An intelligent presence that helps around the house — carrying, tidying, preparing, retrieving.",
+    image: "/assets/assistant-housemanager.jfif",
   },
   {
     tag: "CARE",
     title: "More independence",
     desc: "Helping people live more independently and with dignity, at home and in assisted settings.",
+    image: "/assets/assisted-living-support.jpg",
   },
   {
     tag: "WORK",
     title: "Repetitive tasks, handled",
     desc: "Taking on the repetitive physical work so people can focus on what only people can do.",
+    image: "/assets/assistant-repetitivetasks.jfif",
   },
   {
     tag: "HOSPITALITY",
     title: "Service, elevated",
     desc: "Supporting people in hotels, restaurants, and service environments with a calm, helpful presence.",
+    image: "/assets/assistant-service.jfif",
   },
   {
     tag: "INDUSTRY",
     title: "Alongside people",
     desc: "Working beside people in physically demanding environments — safely and reliably.",
+    image: "/assets/assistant-hardcore.jfif",
   },
   {
     tag: "EVERYDAY LIFE",
     title: "Wherever help is needed",
     desc: "One robot that adapts to the moment, helping wherever help is needed.",
+    image: "/assets/assisted-living-companion.jpg",
   },
 ];
 

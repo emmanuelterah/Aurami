@@ -10,7 +10,7 @@ const ACCENT = 0xf7d081;
 const ACCENT_2 = 0xe5764f;
 const WALK_SPEED = 0.5; // world units per second
 const ROBOT_HEIGHT = 1.7;
-const AWARE_HEADING = -0.45; // turned toward the person callout, viewer-left
+const AWARE_HEADING = -0.55; // turned toward the person callout, viewer-left
 
 type Props = {
   variant?: "scene" | "strip";
@@ -104,7 +104,7 @@ export default function RobotWalk({
     let targetHeading = heading;
 
     new GLTFLoader().load(
-      mode === "aware" ? "/models/hero.glb" : "/models/walk.glb",
+      mode === "aware" ? "/models/reaching.glb" : "/models/walk.glb",
       (gltf) => {
         if (disposed) return;
         const model = gltf.scene;
@@ -153,10 +153,12 @@ export default function RobotWalk({
       const dt = Math.min(clock.getDelta(), 0.05);
 
       if (mode === "aware") {
-        // standing, attentive: slow scan toward the person, faint breathing
+        // reaching toward the bag: hold the gesture, faint breathing and a
+        // very slight lean into the reach so the pose feels live
         gaitT += dt;
-        group.rotation.y = AWARE_HEADING + Math.sin(gaitT * 0.35) * 0.16;
-        group.position.y = Math.sin(gaitT * 0.9) * 0.012;
+        group.rotation.y = AWARE_HEADING + Math.sin(gaitT * 0.3) * 0.05;
+        group.rotation.x = 0.02 + Math.sin(gaitT * 0.7) * 0.008;
+        group.position.y = Math.sin(gaitT * 0.9) * 0.01;
       } else {
         if (mixer) {
           mixer.update(dt);

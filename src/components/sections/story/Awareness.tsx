@@ -18,7 +18,7 @@ export function Awareness() {
             <span className="placeholderLabel">
               [ scene render ]
               <br />
-              Aria noticing a person enter a room
+              Aria reaching for the grocery bag
             </span>
           </RobotWalk>
           <div className={styles.calloutAccent}>

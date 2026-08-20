@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { applications } from "@/lib/content";
 import styles from "./Applications.module.css";
@@ -82,8 +83,23 @@ export default function Applications() {
         <div className={styles.track} ref={trackRef}>
           {applications.map((a) => (
             <article key={a.tag} className={styles.card}>
-              <div className={styles.cardStripes} />
-              <div className={styles.cardGlow} />
+              {a.image ? (
+                <>
+                  <Image
+                    src={a.image}
+                    alt={a.title}
+                    fill
+                    sizes="(max-width: 720px) 66vw, 400px"
+                    className={styles.cardImage}
+                  />
+                  <div className={styles.cardScrim} />
+                </>
+              ) : (
+                <>
+                  <div className={styles.cardStripes} />
+                  <div className={styles.cardGlow} />
+                </>
+              )}
               <div className={styles.cardBody}>
                 <div className={styles.tag}>{a.tag}</div>
                 <h3 className={styles.cardTitle}>{a.title}</h3>

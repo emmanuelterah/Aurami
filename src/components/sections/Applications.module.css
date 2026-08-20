@@ -123,6 +123,22 @@
   padding: 30px;
 }
 
+.cardImage {
+  object-fit: cover;
+}
+
+.cardScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(6, 7, 8, 0.1) 0%,
+    rgba(6, 7, 8, 0) 30%,
+    rgba(6, 7, 8, 0.5) 62%,
+    rgba(6, 7, 8, 0.94) 100%
+  );
+}
+
 .cardStripes {
   position: absolute;
   inset: 0;
