@@ -1,11 +1,10 @@
-import Applications from "@/components/Applications";
-import Engineering from "@/components/Engineering";
-import Footer from "@/components/Footer";
-import Hero from "@/components/Hero";
-import MagnetField from "@/components/MagnetField";
-import Nav from "@/components/Nav";
-import Showcase from "@/components/Showcase";
-import Waitlist from "@/components/Waitlist";
+import Applications from "@/components/sections/Applications";
+import Engineering from "@/components/sections/Engineering";
+import Footer from "@/components/layout/Footer";
+import Hero from "@/components/sections/Hero";
+import Nav from "@/components/layout/Nav";
+import Showcase from "@/components/sections/Showcase";
+import Waitlist from "@/components/sections/Waitlist";
 import {
   Awareness,
   DesignedForLife,
@@ -16,13 +15,12 @@ import {
   NoScreen,
   People,
   Safety,
-} from "@/components/Story";
+} from "@/components/sections/story";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
     <main className={styles.page}>
-      <MagnetField />
 
       {/* film grain + vignette overlays */}
       <div className={styles.grain} aria-hidden data-anim />

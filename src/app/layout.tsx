@@ -30,6 +30,9 @@ export const metadata: Metadata = {
     siteName: "AURAMI Robotics",
     type: "website",
   },
+  icons: {
+    icon: [{ url: "/logo/aurami-favicon.svg", type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({
