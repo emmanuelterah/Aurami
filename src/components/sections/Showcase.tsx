@@ -21,11 +21,7 @@ export default function Showcase() {
       <div className={styles.grid}>
         <div className={styles.stage}>
           <div className="stripes" />
-          <ShowcaseViewer focus={active}>
-            <span className="placeholderLabel">
-              Aria · front view · click a point
-            </span>
-          </ShowcaseViewer>
+          <ShowcaseViewer focus={active} />
           {capabilities.map((c) => (
             <button
               key={c.id}

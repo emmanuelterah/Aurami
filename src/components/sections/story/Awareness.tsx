@@ -1,5 +1,4 @@
 import { awarenessTags } from "@/lib/content";
-import RobotWalk from "@/components/three/RobotWalk";
 import { d } from "./shared";
 import styles from "./story.module.css";
 
@@ -13,18 +12,17 @@ export function Awareness() {
     >
       <div className={styles.awarenessGrid}>
         <div className={`${styles.awarenessScene} revealFade`}>
-          <div className="stripes" />
-          <RobotWalk variant="scene" mode="aware">
-            <span className="placeholderLabel">
-              [ scene render ]
-              <br />
-              Aria reaching for the grocery bag
-            </span>
-          </RobotWalk>
-          <div className={styles.calloutAccent}>
-            ◎ person · carrying groceries
-          </div>
-          <div className={styles.calloutNeutral}>bag · graspable · 2.1kg</div>
+          <video
+            className={styles.awarenessVideo}
+            src="/video/aria-groceries.mp4"
+            poster="/video/aria-groceries-poster.jpg"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label="Aria approaches a person carrying groceries, takes a bag, and carries it to the kitchen"
+          />
         </div>
         <div>
           <p className="kicker reveal">CHAPTER 02 — IT UNDERSTANDS THE WORLD</p>

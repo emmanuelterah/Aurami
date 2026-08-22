@@ -209,15 +209,6 @@ button {
   );
 }
 
-.placeholderLabel {
-  font-family: ui-monospace, monospace;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  color: rgba(242, 243, 245, 0.38);
-  text-transform: uppercase;
-  line-height: 1.7;
-}
-
 /* responsive helpers */
 .desktopOnly {
   display: flex;

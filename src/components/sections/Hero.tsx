@@ -47,14 +47,6 @@ export default function Hero() {
         <div className="stripes" />
         <div className={styles.sweep} data-anim />
         <Hero3D />
-        <div className={styles.stageCaption}>
-          ARIA · V1 <span className={styles.stageCaptionDot} /> IDLE
-        </div>
-      </div>
-
-      <div className={styles.scrollHint} data-anim>
-        SCROLL TO BEGIN
-        <span className={styles.scrollLine} />
       </div>
     </section>
   );
